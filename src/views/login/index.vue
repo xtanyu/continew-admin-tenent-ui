@@ -85,6 +85,7 @@
         </a>
       </div>
     </div>
+    <SelectTenant />
   </div>
 </template>
 
