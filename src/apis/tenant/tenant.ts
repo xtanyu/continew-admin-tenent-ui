@@ -72,3 +72,13 @@ export function exportTenant(query: TenantQuery) {
 export const getTenantCommon = () => {
   return http.get<TenantCommon>(`${BASE_URL}/common`)
 }
+
+/** @desc 获取租户管理账号用户名 */
+export const getTenantLoginUser = (tenantId: string) => {
+  return http.get<string>(`${BASE_URL}/loginUser/${tenantId}`)
+}
+
+/** @desc 租户管理账号信息更新 */
+export const updateTenantLoginUser = (data: any) => {
+  return http.put(`${BASE_URL}/loginUser`, data)
+}

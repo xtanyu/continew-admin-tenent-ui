@@ -62,17 +62,30 @@
           >
             删除
           </a-link>
+
+          <a-dropdown>
+            <a-button v-if="has.hasPermOr(['tenant:user:editLoginUserInfo'])" type="text" size="mini" title="更多">
+              <template #icon>
+                <icon-more :size="16" />
+              </template>
+            </a-button>
+            <template #content>
+              <a-doption v-permission="['tenant:user:editLoginUserInfo']" title="修改登录信息" @click="editLoginUserInfo(record)">修改登录信息</a-doption>
+            </template>
+          </a-dropdown>
         </a-space>
       </template>
     </GiTable>
 
     <TenantAddModal ref="TenantAddModalRef" @save-success="search" />
     <TenantDetailDrawer ref="TenantDetailDrawerRef" />
+    <TenantUserEditModal ref="TenantUserEditModalRef" @save-success="search" />
   </div>
 </template>
 
 <script setup lang="ts">
 import TenantAddModal from './TenantAddModal.vue'
+import TenantUserEditModal from './TenantUserEditModal.vue'
 import TenantDetailDrawer from './TenantDetailDrawer.vue'
 import { type TenantQuery, type TenantResp, deleteTenant, listTenant } from '@/apis/tenant/tenant'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
@@ -109,7 +122,7 @@ const columns: TableInstanceColumns[] = [
     title: '操作',
     dataIndex: 'action',
     slotName: 'action',
-    width: 160,
+    width: 190,
     align: 'center',
     fixed: !isMobile() ? 'right' : undefined,
     show: has.hasPermOr(['tenant:user:detail', 'tenant:user:update', 'tenant:user:delete']),
@@ -133,6 +146,7 @@ const onDelete = (record: TenantResp) => {
 }
 
 const TenantAddModalRef = ref<InstanceType<typeof TenantAddModal>>()
+const TenantUserEditModalRef = ref<InstanceType<typeof TenantUserEditModal>>()
 // 新增
 const onAdd = () => {
   TenantAddModalRef.value?.onAdd()
@@ -141,6 +155,11 @@ const onAdd = () => {
 // 修改
 const onUpdate = (record: TenantResp) => {
   TenantAddModalRef.value?.onUpdate(record.id)
+}
+
+// 修改登录信息
+const editLoginUserInfo = (record: TenantResp) => {
+  TenantUserEditModalRef.value?.open(record.id)
 }
 
 const TenantDetailDrawerRef = ref<InstanceType<typeof TenantDetailDrawer>>()
