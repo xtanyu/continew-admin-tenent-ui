@@ -60,7 +60,7 @@ import {
   type TenantPackageResp,
   deleteTenantPackage,
   listTenantPackage,
-} from '@/apis/open/tenantPackage'
+} from '@/apis/tenant/tenantPackage'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
 import { useTable } from '@/hooks'
 import { isMobile } from '@/utils'

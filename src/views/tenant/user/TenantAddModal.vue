@@ -16,11 +16,11 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { addTenant, getTenant, updateTenant } from '@/apis/open/tenant'
+import { addTenant, getTenant, updateTenant } from '@/apis/tenant/tenant'
 import { type Columns, GiForm, type Options } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
-import { listAllTenantPackage } from '@/apis/open/tenantPackage'
+import { listAllTenantPackage } from '@/apis/tenant/tenantPackage'
 import { encryptByRsa } from '@/utils/encrypt'
 
 const emit = defineEmits<{
@@ -143,12 +143,15 @@ const save = async () => {
       await updateTenant(form, dataId.value)
       Message.success('修改成功')
     } else {
-      const rawPassword = form.plaintextPwd
-      if (rawPassword) {
-        form.password = encryptByRsa(rawPassword) || ''
-        form.plaintextPwd = undefined
-      }
-      await addTenant(form)
+      await addTenant({
+        username: form.username,
+        password: encryptByRsa(form.plaintextPwd) || '',
+        name: form.name,
+        domain: form.domain,
+        packageId: form.packageId,
+        status: form.status,
+        expireTime: form.expireTime,
+      })
       Message.success('新增成功')
     }
     emit('save-success')

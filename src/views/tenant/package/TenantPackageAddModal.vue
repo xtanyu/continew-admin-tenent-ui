@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 import { type FormInstance, Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { addTenantPackage, getTenantPackage, updateTenantPackage } from '@/apis/open/tenantPackage'
+import { addTenantPackage, getTenantPackage, updateTenantPackage } from '@/apis/tenant/tenantPackage'
 import { useResetReactive } from '@/hooks'
 import { useMenu } from '@/hooks/app'
 

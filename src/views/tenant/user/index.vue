@@ -74,12 +74,12 @@
 <script setup lang="ts">
 import TenantAddModal from './TenantAddModal.vue'
 import TenantDetailDrawer from './TenantDetailDrawer.vue'
-import { type TenantQuery, type TenantResp, deleteTenant, listTenant } from '@/apis/open/tenant'
+import { type TenantQuery, type TenantResp, deleteTenant, listTenant } from '@/apis/tenant/tenant'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
 import { useTable } from '@/hooks'
 import { isMobile } from '@/utils'
 import has from '@/utils/has'
-import { listAllTenantPackage } from '@/apis/open/tenantPackage'
+import { listAllTenantPackage } from '@/apis/tenant/tenantPackage'
 
 defineOptions({ name: 'Tenant' })
 

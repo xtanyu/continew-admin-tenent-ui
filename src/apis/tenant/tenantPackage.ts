@@ -1,6 +1,6 @@
 import http from '@/utils/http'
 
-const BASE_URL = '/open/tenantPackage'
+const BASE_URL = '/tenant/package'
 
 export interface TenantPackageResp {
   id: string

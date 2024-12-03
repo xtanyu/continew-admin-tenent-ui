@@ -1,7 +1,7 @@
 import http from '@/utils/http'
 import type { TenantCommon } from '@/utils/tenant'
 
-const BASE_URL = '/open/tenant'
+const BASE_URL = '/tenant/user'
 
 export interface TenantResp {
   id: string
