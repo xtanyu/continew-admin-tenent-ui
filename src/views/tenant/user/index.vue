@@ -30,7 +30,7 @@
         </a-button>
       </template>
       <template #toolbar-right>
-        <a-button v-permission="['tenant:tenant:add']" type="primary" @click="onAdd">
+        <a-button v-permission="['tenant:user:add']" type="primary" @click="onAdd">
           <template #icon><icon-plus /></template>
           <template #default>新增</template>
         </a-button>
@@ -51,10 +51,10 @@
       </template>
       <template #action="{ record }">
         <a-space>
-          <a-link v-permission="['tenant:tenant:detail']" title="详情" @click="onDetail(record)">详情</a-link>
-          <a-link v-permission="['tenant:tenant:update']" title="修改" @click="onUpdate(record)">修改</a-link>
+          <a-link v-permission="['tenant:user:detail']" title="详情" @click="onDetail(record)">详情</a-link>
+          <a-link v-permission="['tenant:user:update']" title="修改" @click="onUpdate(record)">修改</a-link>
           <a-link
-            v-permission="['tenant:tenant:delete']"
+            v-permission="['tenant:user:delete']"
             status="danger"
             :disabled="record.disabled"
             :title="record.disabled ? '不可删除' : '删除'"
@@ -112,7 +112,7 @@ const columns: TableInstanceColumns[] = [
     width: 160,
     align: 'center',
     fixed: !isMobile() ? 'right' : undefined,
-    show: has.hasPermOr(['tenant:tenant:detail', 'tenant:tenant:update', 'tenant:tenant:delete']),
+    show: has.hasPermOr(['tenant:user:detail', 'tenant:user:update', 'tenant:user:delete']),
   },
 ]
 
