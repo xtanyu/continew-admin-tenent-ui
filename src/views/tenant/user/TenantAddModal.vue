@@ -102,6 +102,9 @@ const columns: Columns = reactive([
     type: 'select',
     options: tenantListOptions,
     rules: [{ required: true, message: '请选择租户套餐' }],
+    hide: () => {
+      return isUpdate.value
+    },
   },
   {
     label: '状态',
