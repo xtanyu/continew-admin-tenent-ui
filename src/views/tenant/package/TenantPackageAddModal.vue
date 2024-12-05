@@ -29,9 +29,8 @@
         <template #extra>
           <a-tree
             ref="menuTreeRef"
-            v-model:checked-keys="form.menuIds"
-            class="scrollable-container"
             :data="menuList"
+            class="scrollable-container"
             :default-expand-all="isMenuExpanded"
             :check-strictly="!form.menuCheckStrictly"
             checkable
@@ -78,6 +77,7 @@ const reset = () => {
   isMenuCheckAll.value = false
   menuTreeRef.value?.expandAll(isMenuExpanded.value)
   menuTreeRef.value?.checkAll(false)
+  formRef.value?.resetFields()
   resetForm()
 }
 
@@ -96,9 +96,9 @@ const getMenuAllCheckedKeys = () => {
 // 保存
 const save = async () => {
   try {
-    form.menuIds = getMenuAllCheckedKeys()
     const isInvalid = await formRef.value?.validate()
     if (isInvalid) return false
+    form.menuIds = getMenuAllCheckedKeys()
     if (isUpdate.value) {
       await updateTenantPackage(form, dataId.value)
       Message.success('修改成功')
@@ -128,6 +128,7 @@ const onUpdate = async (id: string) => {
   dataId.value = id
   const { data } = await getTenantPackage(id)
   Object.assign(form, data)
+  menuTreeRef.value?.checkNode(form.menuIds, true, true)
   visible.value = true
 }
 
