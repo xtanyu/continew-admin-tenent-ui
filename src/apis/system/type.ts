@@ -321,11 +321,6 @@ export interface LoginConfig {
   LOGIN_CAPTCHA_ENABLED: OptionResp
 }
 
-/** 安全配置类型 */
-export interface CaptchaSetting {
-  NEED_CAPTCHA: OptionResp
-}
-
 /** 绑定三方账号信息 */
 export interface BindSocialAccountRes {
   source: string
