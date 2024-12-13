@@ -51,10 +51,11 @@
       </a-form-item>
       <a-form-item v-if="form.type === 2" label="组件路径" field="component">
         <a-input v-if="form.isExternal" v-model.trim="form.component" placeholder="请输入组件路径" allow-clear />
-        <a-input v-else v-model.trim="form.component" placeholder="请输入组件路径" allow-clear>
-          <template #prepend>@/views/</template>
-          <template #append>.vue</template>
-        </a-input>
+        <a-select v-else v-model="form.component" placeholder="请选择组件路径" allow-clear allow-create :options="componentOptions">
+          <template #label="{ data }">
+            {{ data?.value }}
+          </template>
+        </a-select>
       </a-form-item>
       <a-form-item v-if="form.type === 3" label="权限标识" field="permission">
         <a-input v-model.trim="form.permission" placeholder="system:user:add" allow-clear />
@@ -121,6 +122,7 @@ import { mapTree } from 'xe-utils'
 import { type MenuResp, addMenu, getMenu, updateMenu } from '@/apis/system/menu'
 import { useResetReactive } from '@/hooks'
 import { filterTree, transformPathToName } from '@/utils'
+import { useComponentPaths } from '@/hooks/modules/useComponentPaths'
 
 interface Props {
   menus: MenuResp[]
@@ -151,6 +153,8 @@ const [form, resetForm] = useResetReactive({
 })
 
 const componentName = computed(() => transformPathToName(form.path))
+
+const { componentOptions } = useComponentPaths()
 
 const rules: FormInstance['rules'] = {
   parentId: [{ required: true, message: '请选择上级菜单' }],
