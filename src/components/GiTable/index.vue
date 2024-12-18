@@ -97,7 +97,14 @@
 </template>
 
 <script setup lang="ts" generic="T extends TableData">
-import type { DropdownInstance, TableColumnData, TableData, TableInstance } from '@arco-design/web-vue'
+import type {
+  DropdownInstance,
+  Table,
+  TableColumnData,
+  TableData,
+  TableInstance,
+} from '@arco-design/web-vue'
+
 import { VueDraggable } from 'vue-draggable-plus'
 
 defineOptions({ name: 'GiTable', inheritAttrs: false })
@@ -137,8 +144,8 @@ defineSlots<{
 
 const attrs = useAttrs()
 const slots = useSlots()
-
-interface Props {
+type TableProps = Partial<InstanceType<typeof Table>['$props']>
+interface Props extends TableProps {
   title?: string
   data: T[]
   disabledTools?: string[]
