@@ -63,10 +63,10 @@ const columns: Columns = reactive([
     ],
   },
   {
-    label: '连接主机地址',
+    label: '主机连接地址',
     field: 'host',
     type: 'input',
-    rules: [{ required: true, message: '请输入连接主机地址' }],
+    rules: [{ required: true, message: '请输入主机连接地址' }],
   },
   {
     label: '连接端口',

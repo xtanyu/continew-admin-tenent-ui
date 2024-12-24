@@ -94,7 +94,7 @@ const columns: TableInstanceColumns[] = [
   { title: '连接ID', dataIndex: 'id', slotName: 'id' },
   { title: '连接名称', dataIndex: 'connectName', slotName: 'connectName', align: 'center' },
   { title: '连接类型', dataIndex: 'type', slotName: 'type', align: 'center' },
-  { title: '连接主机地址', dataIndex: 'host', slotName: 'host', align: 'center' },
+  { title: '主机连接地址', dataIndex: 'host', slotName: 'host', align: 'center' },
   { title: '连接端口', dataIndex: 'port', slotName: 'port', align: 'center' },
   {
     title: '操作',

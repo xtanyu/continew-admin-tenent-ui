@@ -47,7 +47,7 @@ const getListAllTenantPackage = async () => {
   const data = await listAllPackage()
   tenantListOptions.value = []
   data.data.forEach((item: any) => {
-    tenantListOptions.value.push({ label: item.name, value: item.id })
+    tenantListOptions.value.push({ label: item.name, value: item.id, disabled: item.status != 1 })
   })
 }
 

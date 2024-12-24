@@ -4,7 +4,7 @@
       <a-descriptions-item label="ID">{{ dataDetail?.id }}</a-descriptions-item>
       <a-descriptions-item label="连接名称">{{ dataDetail?.connectName }}</a-descriptions-item>
       <a-descriptions-item label="连接类型">{{ dataDetail?.type }}</a-descriptions-item>
-      <a-descriptions-item label="连接主机地址">{{ dataDetail?.host }}</a-descriptions-item>
+      <a-descriptions-item label="主机连接地址">{{ dataDetail?.host }}</a-descriptions-item>
       <a-descriptions-item label="连接端口">{{ dataDetail?.port }}</a-descriptions-item>
       <a-descriptions-item label="连接用户名">{{ dataDetail?.username }}</a-descriptions-item>
       <a-descriptions-item label="创建人">{{ dataDetail?.createUserString }}</a-descriptions-item>
