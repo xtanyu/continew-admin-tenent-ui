@@ -16,11 +16,10 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { addTenant, getTenant, updateTenant } from '@/apis/tenant/tenant'
+import { addTenant, getTenant, listAllDbConnect, listAllPackage, updateTenant } from '@/apis/tenant/tenant'
 import { type Columns, GiForm, type Options } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
-import { listAllTenantPackage } from '@/apis/tenant/tenantPackage'
 import { encryptByRsa } from '@/utils/encrypt'
 
 const emit = defineEmits<{
@@ -42,12 +41,21 @@ const options: Options = {
 }
 
 const tenantListOptions = ref([])
+const dbConnectListOptions = ref([])
 
 const getListAllTenantPackage = async () => {
-  const data = await listAllTenantPackage()
+  const data = await listAllPackage()
   tenantListOptions.value = []
   data.data.forEach((item: any) => {
-    tenantListOptions.value.push({ label: item.name, value: item.id })
+    tenantListOptions.value.push({ label: item.name, value: item.id, disabled: item.status != 1 })
+  })
+}
+
+const getListAllDbConnect = async () => {
+  const data = await listAllDbConnect()
+  dbConnectListOptions.value = []
+  data.data.forEach((item: any) => {
+    dbConnectListOptions.value.push({ label: item.connectName, value: item.id })
   })
 }
 
@@ -106,6 +114,34 @@ const columns: Columns = reactive([
       return isUpdate.value
     },
   },
+
+  {
+    label: '隔离级别',
+    field: 'isolationLevel',
+    type: 'radio-group',
+    rules: [{ required: true, message: '请选择隔离级别' }],
+    props: {
+      type: 'button',
+      size: 'small',
+    },
+    options: [
+      { label: '行级', value: 0 },
+      { label: '数据源级', value: 1 },
+    ],
+    hide: () => {
+      return isUpdate.value
+    },
+  },
+  {
+    label: '数据连接',
+    field: 'dbConnectId',
+    type: 'select',
+    options: dbConnectListOptions,
+    rules: [{ required: true, message: '请选择数据连接' }],
+    hide: () => {
+      return isUpdate.value
+    },
+  },
   {
     label: '状态',
     field: 'status',
@@ -134,6 +170,7 @@ const columns: Columns = reactive([
 const reset = () => {
   formRef.value?.formRef?.resetFields()
   getListAllTenantPackage()
+  getListAllDbConnect()
   resetForm()
 }
 
@@ -146,15 +183,9 @@ const save = async () => {
       await updateTenant(form, dataId.value)
       Message.success('修改成功')
     } else {
-      await addTenant({
-        username: form.username,
-        password: encryptByRsa(form.plaintextPwd) || '',
-        name: form.name,
-        domain: form.domain,
-        packageId: form.packageId,
-        status: form.status,
-        expireTime: form.expireTime,
-      })
+      const data = form
+      data.password = encryptByRsa(form.plaintextPwd) || ''
+      await addTenant(data)
       Message.success('新增成功')
     }
     emit('save-success')

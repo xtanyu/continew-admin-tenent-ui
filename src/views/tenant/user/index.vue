@@ -49,6 +49,12 @@
         </span>
         <span v-else>{{ record.expireTime }}</span>
       </template>
+
+      <template #isolationLevel="{ record }">
+        <a-tag v-if="record.isolationLevel === 0" color="arcoblue">行级租户</a-tag>
+        <a-tag v-if="record.isolationLevel === 1" color="green">数据源级</a-tag>
+      </template>
+
       <template #action="{ record }">
         <a-space>
           <a-link v-permission="['tenant:user:detail']" title="详情" @click="onDetail(record)">详情</a-link>
@@ -111,8 +117,9 @@ const {
   handleDelete,
 } = useTable((page) => listTenant({ ...queryForm, ...page }), { immediate: true })
 const columns: TableInstanceColumns[] = [
-  { title: '租户ID', dataIndex: 'id', slotName: 'id' },
+  { title: '租户编码', dataIndex: 'tenantSn', slotName: 'tenantSn' },
   { title: '租户名称', dataIndex: 'name', slotName: 'name' },
+  { title: '隔离级别', dataIndex: 'isolationLevel', slotName: 'isolationLevel', align: 'center' },
   { title: '绑定域名', dataIndex: 'domain', slotName: 'domain' },
   { title: '绑定套餐', dataIndex: 'packageName', slotName: 'packageName' },
   { title: '租户状态', dataIndex: 'status', slotName: 'status' },

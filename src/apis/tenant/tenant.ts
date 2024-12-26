@@ -82,3 +82,13 @@ export const getTenantLoginUser = (tenantId: string) => {
 export const updateTenantLoginUser = (data: any) => {
   return http.put(`${BASE_URL}/loginUser`, data)
 }
+
+/** @desc 获取套餐列表 */
+export const listAllPackage = () => {
+  return http.get<any>(`${BASE_URL}/all/package`)
+}
+
+/** @desc 获取数据连接列表 */
+export const listAllDbConnect = () => {
+  return http.get<any>(`${BASE_URL}/all/dbConnect`)
+}
