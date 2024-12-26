@@ -62,7 +62,6 @@ const getListAllDbConnect = async () => {
 const [form, resetForm] = useResetReactive({
   status: 2,
   plaintextPwd: undefined,
-  isolationLevel: 0,
 })
 
 const columns: Columns = reactive([
@@ -140,7 +139,7 @@ const columns: Columns = reactive([
     options: dbConnectListOptions,
     rules: [{ required: true, message: '请选择数据连接' }],
     hide: () => {
-      return form.isolationLevel === 0
+      return isUpdate.value
     },
   },
   {
