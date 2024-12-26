@@ -43,10 +43,10 @@ export interface RouteItem {
 
 /** 认证类型 */
 export enum AuthTypeEnum {
-  ACCOUNT = 'account',
-  PHONE = 'phone',
-  EMAIL = 'email',
-  SOCIAL_AUTH = 'socialAuth',
+  ACCOUNT = 'ACCOUNT',
+  PHONE = 'PHONE',
+  EMAIL = 'EMAIL',
+  SOCIAL = 'SOCIAL',
 }
 export interface AuthReq {
   clientId: string

@@ -72,7 +72,7 @@ const storeSetup = () => {
 
   // 三方账号登录
   const socialLogin = async (source: string, req: any) => {
-    const res = await socialLoginApi({ ...req, source, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeEnum.SOCIAL_AUTH })
+    const res = await socialLoginApi({ ...req, source, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeEnum.SOCIAL })
     setToken(res.data.token)
     token.value = res.data.token
   }
