@@ -3,6 +3,7 @@ import { computed, reactive, ref } from 'vue'
 import { resetRouter } from '@/router'
 import {
   type AccountLoginReq,
+  AuthTypeEnum,
   type EmailLoginReq,
   type PhoneLoginReq,
   type UserInfo,
@@ -71,7 +72,7 @@ const storeSetup = () => {
 
   // 三方账号登录
   const socialLogin = async (source: string, req: any) => {
-    const res = await socialLoginApi(source, req)
+    const res = await socialLoginApi({ ...req, source, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeEnum.SOCIAL_AUTH })
     setToken(res.data.token)
     token.value = res.data.token
   }

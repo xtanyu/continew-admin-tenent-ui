@@ -7,22 +7,22 @@ const BASE_URL = '/auth'
 
 /** @desc 账号登录 */
 export function accountLogin(req: T.AccountLoginReq) {
-  return http.post<T.LoginResp>(`${BASE_URL}/account`, req)
+  return http.post<T.LoginResp>(`${BASE_URL}/login`, req)
 }
 
 /** @desc 手机号登录 */
 export function phoneLogin(req: T.PhoneLoginReq) {
-  return http.post<T.LoginResp>(`${BASE_URL}/phone`, req)
+  return http.post<T.LoginResp>(`${BASE_URL}/login`, req)
 }
 
 /** @desc 邮箱登录 */
 export function emailLogin(req: T.EmailLoginReq) {
-  return http.post<T.LoginResp>(`${BASE_URL}/email`, req)
+  return http.post<T.LoginResp>(`${BASE_URL}/login`, req)
 }
 
 /** @desc 三方账号登录 */
-export function socialLogin(source: string, req: any) {
-  return http.post<T.LoginResp>(`/oauth/${source}`, req)
+export function socialLogin(req: any) {
+  return http.post<T.LoginResp>(`${BASE_URL}/login`, req)
 }
 
 /** @desc 三方账号登录授权 */

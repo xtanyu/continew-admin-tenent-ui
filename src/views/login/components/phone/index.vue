@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { type FormInstance, Message } from '@arco-design/web-vue'
-import type { BehaviorCaptchaReq } from '@/apis'
+import { AuthTypeEnum, type BehaviorCaptchaReq } from '@/apis'
 // import { type BehaviorCaptchaReq, getSmsCaptcha } from '@/apis'
 import { useTabsStore, useUserStore } from '@/stores'
 import * as Regexp from '@/utils/regexp'
@@ -69,7 +69,7 @@ const handleLogin = async () => {
   if (isInvalid) return
   try {
     loading.value = true
-    await userStore.phoneLogin(form)
+    await userStore.phoneLogin({ ...form, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeEnum.PHONE })
     tabsStore.reset()
     const { redirect, ...othersQuery } = router.currentRoute.value.query
     await router.push({
