@@ -49,8 +49,8 @@ export enum AuthTypeEnum {
   SOCIAL = 'SOCIAL',
 }
 export interface AuthReq {
-  clientId: string
-  authType: string
+  clientId?: string
+  authType?: string
 }
 
 /** 账号登录请求参数 */

@@ -27,7 +27,7 @@ export function socialLogin(req: any) {
 
 /** @desc 三方账号登录授权 */
 export function socialAuth(source: string) {
-  return http.get<T.SocialAuthAuthorizeResp>(`/oauth/${source}`)
+  return http.get<T.SocialAuthAuthorizeResp>(`${BASE_URL}/${source}`)
 }
 
 /** @desc 退出登录 */

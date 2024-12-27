@@ -43,7 +43,6 @@ import { useStorage } from '@vueuse/core'
 import { getImageCaptcha } from '@/apis/common'
 import { useTabsStore, useUserStore } from '@/stores'
 import { encryptByRsa } from '@/utils/encrypt'
-import { AuthTypeEnum } from '@/apis'
 
 const loginConfig = useStorage('login-config', {
   rememberMe: true,
@@ -120,8 +119,6 @@ const handleLogin = async () => {
       password: encryptByRsa(form.password) || '',
       captcha: form.captcha,
       uuid: form.uuid,
-      clientId: import.meta.env.VITE_CLIENT_ID,
-      authType: AuthTypeEnum.ACCOUNT,
     })
     tabsStore.reset()
     const { redirect, ...othersQuery } = router.currentRoute.value.query
@@ -135,8 +132,7 @@ const handleLogin = async () => {
     loginConfig.value.username = rememberMe ? form.username : ''
     Message.success('欢迎使用')
   } catch (error) {
-    console.log('error', error)
-
+    console.error(error)
     getCaptcha()
     form.captcha = ''
   } finally {

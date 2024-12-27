@@ -1,8 +1,8 @@
 <template>
-  <a-drawer v-model:visible="visible" title="客户端管理详情" :width="width >= 600 ? 600 : '100%'" :footer="false">
+  <a-drawer v-model:visible="visible" title="客户端详情" :width="width >= 600 ? 600 : '100%'" :footer="false">
     <a-descriptions :column="1" size="large" class="general-description">
       <a-descriptions-item label="ID">{{ dataDetail?.id }}</a-descriptions-item>
-      <a-descriptions-item label="客户端ID">{{ dataDetail?.clientId }}</a-descriptions-item>
+      <a-descriptions-item label="客户端ID"><a-typography-paragraph :copyable="!!dataDetail?.clientId">{{ dataDetail?.clientId }}</a-typography-paragraph></a-descriptions-item>
       <a-descriptions-item label="客户端Key">{{ dataDetail?.clientKey }}</a-descriptions-item>
       <a-descriptions-item label="客户端秘钥">{{ dataDetail?.clientSecret }}</a-descriptions-item>
       <a-descriptions-item label="认证类型">
@@ -16,7 +16,7 @@
       <a-descriptions-item label="Token最低活跃频率">{{ dataDetail?.activeTimeout }}</a-descriptions-item>
       <a-descriptions-item label="Token有效期">{{ dataDetail?.timeout }}</a-descriptions-item>
       <a-descriptions-item label="状态">
-        <GiCellTag :value="dataDetail?.status" :dict="dis_enable_status_enum" />
+        <GiCellStatus :status="dataDetail?.status" />
       </a-descriptions-item>
       <a-descriptions-item label="创建人">{{ dataDetail?.createUserString }}</a-descriptions-item>
       <a-descriptions-item label="创建时间">{{ dataDetail?.createTime }}</a-descriptions-item>
@@ -30,13 +30,11 @@
 import { useWindowSize } from '@vueuse/core'
 import { type ClientDetailResp, getClient as getDetail } from '@/apis/system/client'
 import { useDict } from '@/hooks/app'
-import GiCellTag from '@/components/GiCell/GiCellTag.vue'
 
 const {
-  auth_type_enum,
   client_type,
-  dis_enable_status_enum,
-} = useDict('auth_type_enum', 'client_type', 'dis_enable_status_enum')
+  auth_type_enum,
+} = useDict('client_type', 'auth_type_enum')
 
 const { width } = useWindowSize()
 

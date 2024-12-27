@@ -6,59 +6,37 @@
       :data="dataList"
       :columns="columns"
       :loading="loading"
-      :scroll="{ x: '100%', y: '100%', minWidth: 1000 }"
+      :scroll="{ x: '100%', y: '100%', minWidth: 1500 }"
       :pagination="pagination"
       :disabled-tools="['size']"
-      :disabled-column-keys="['name']"
+      :disabled-column-keys="['clientKey']"
       @refresh="search"
     >
       <template #toolbar-left>
-        <a-input v-model="queryForm.clientKey" placeholder="请输入客户端Key" allow-clear @change="search">
-          <template #prefix>
-            <icon-search />
-          </template>
-        </a-input>
-        <a-input v-model="queryForm.clientSecret" placeholder="请输入客户端秘钥" allow-clear @change="search">
-          <template #prefix>
-            <icon-search />
-          </template>
-        </a-input>
+        <a-input-search v-model="queryForm.clientKey" placeholder="搜索客户端Key" allow-clear @search="search" />
+        <a-input-search v-model="queryForm.clientSecret" placeholder="搜索客户端秘钥" allow-clear @search="search" />
         <a-select
           v-model="queryForm.clientType"
           :options="client_type"
           placeholder="请选择客户端类型"
           allow-clear
-          style="width: 150px"
+          style="width: 160px"
           @change="search"
         />
         <a-select
-          v-model="queryForm.status" :options="dis_enable_status_enum" placeholder="请选择状态" allow-clear
+          v-model="queryForm.status" :options="DisEnableStatusList" placeholder="请选择状态" allow-clear
           style="width: 150px"
           @change="search"
-        >
-          <template #prefix>
-            <icon-search />
-          </template>
-        </a-select>
+        />
         <a-button @click="reset">
-          <template #icon>
-            <icon-refresh />
-          </template>
+          <template #icon><icon-refresh /></template>
           <template #default>重置</template>
         </a-button>
       </template>
       <template #toolbar-right>
         <a-button v-permission="['system:client:add']" type="primary" @click="onAdd">
-          <template #icon>
-            <icon-plus />
-          </template>
+          <template #icon><icon-plus /></template>
           <template #default>新增</template>
-        </a-button>
-        <a-button v-permission="['system:client:export']" @click="onExport">
-          <template #icon>
-            <icon-download />
-          </template>
-          <template #default>导出</template>
         </a-button>
       </template>
       <template #action="{ record }">
@@ -87,22 +65,24 @@
 import type { LabelValue } from '@arco-design/web-vue/es/tree-select/interface'
 import ClientAddModal from './ClientAddModal.vue'
 import ClientDetailDrawer from './ClientDetailDrawer.vue'
-import { type ClientQuery, type ClientResp, deleteClient, exportClient, listClient } from '@/apis/system/client'
+import { type ClientQuery, type ClientResp, deleteClient, listClient } from '@/apis/system/client'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
-import { useDownload, useTable } from '@/hooks'
+import { DisEnableStatusList } from '@/constant/common'
+import { useTable } from '@/hooks'
 import { useDict } from '@/hooks/app'
 import { isMobile } from '@/utils'
 import has from '@/utils/has'
+import CellCopy from '@/components/CellCopy/index.vue'
 import GiCellTag from '@/components/GiCell/GiCellTag.vue'
 import GiCellTags from '@/components/GiCell/GiCellTags.vue'
+import GiCellStatus from '@/components/GiCell/GiCellStatus.vue'
 
-defineOptions({ name: 'Client' })
+defineOptions({ name: 'SystemClient' })
 
 const {
-  auth_type_enum,
   client_type,
-  dis_enable_status_enum,
-} = useDict('auth_type_enum', 'client_type', 'dis_enable_status_enum')
+  auth_type_enum,
+} = useDict('client_type', 'auth_type_enum')
 
 const queryForm = reactive<ClientQuery>({
   clientKey: '',
@@ -117,6 +97,7 @@ const formatAuthType = (data: string[]) => {
     return auth_type_enum.value.find((d: LabelValue) => d.value === item).label
   })
 }
+
 const {
   tableData: dataList,
   loading,
@@ -125,8 +106,26 @@ const {
   handleDelete,
 } = useTable((page) => listClient({ ...queryForm, ...page }), { immediate: true })
 const columns: TableInstanceColumns[] = [
-  { title: '客户端ID', dataIndex: 'clientId', slotName: 'clientId', ellipsis: true, tooltip: true },
-  { title: '客户端Key', dataIndex: 'clientKey', slotName: 'clientKey', ellipsis: true, tooltip: true, align: 'center' },
+  {
+    title: '序号',
+    width: 66,
+    align: 'center',
+    render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
+    fixed: !isMobile() ? 'left' : undefined,
+  },
+  {
+    title: '客户端 ID',
+    dataIndex: 'clientId',
+    slotName: 'clientId',
+    ellipsis: true,
+    tooltip: true,
+    render: ({ record }) => {
+      return (
+        <CellCopy content={record.clientId} />
+      )
+    },
+  },
+  { title: '客户端 Key', dataIndex: 'clientKey', slotName: 'clientKey', ellipsis: true, tooltip: true, align: 'center' },
   { title: '客户端秘钥', dataIndex: 'clientSecret', slotName: 'clientSecret', ellipsis: true, tooltip: true, align: 'center' },
   {
     title: '认证类型',
@@ -152,18 +151,21 @@ const columns: TableInstanceColumns[] = [
       return <GiCellTag value={record.clientType} dict={client_type.value} />
     },
   },
-  { title: 'Token最低活跃频率', dataIndex: 'activeTimeout', slotName: 'activeTimeout', align: 'center' },
-  { title: 'Token有效期', dataIndex: 'timeout', slotName: 'timeout', align: 'center' },
+  { title: 'Token 最低活跃频率', dataIndex: 'activeTimeout', slotName: 'activeTimeout', width: 180, align: 'center', render: ({ record }) => `${record.activeTimeout} s` },
+  { title: 'Token 有效期', dataIndex: 'timeout', slotName: 'timeout', align: 'center', render: ({ record }) => `${record.timeout} s` },
   {
     title: '状态',
     dataIndex: 'status',
     slotName: 'status',
     align: 'center',
     render: ({ record }) => {
-      return <GiCellTag value={record.status} dict={dis_enable_status_enum.value} />
+      return <GiCellStatus status={record.status} />
     },
   },
-  { title: '创建时间', dataIndex: 'createTime', slotName: 'createTime' },
+  { title: '创建人', dataIndex: 'createUserString', width: 140, ellipsis: true, tooltip: true, show: false },
+  { title: '创建时间', dataIndex: 'createTime', width: 180 },
+  { title: '修改人', dataIndex: 'updateUserString', width: 140, ellipsis: true, tooltip: true, show: false },
+  { title: '修改时间', dataIndex: 'updateTime', width: 180, show: false },
   {
     title: '操作',
     dataIndex: 'action',
@@ -188,14 +190,9 @@ const reset = () => {
 // 删除
 const onDelete = (record: ClientResp) => {
   return handleDelete(() => deleteClient(record.id), {
-    content: `是否确定删除该条数据？`,
+    content: `是否确定删除客户端「${record.clientKey}(${record.clientId})」？`,
     showModal: true,
   })
-}
-
-// 导出
-const onExport = () => {
-  useDownload(() => exportClient(queryForm))
 }
 
 const ClientAddModalRef = ref<InstanceType<typeof ClientAddModal>>()
