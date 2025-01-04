@@ -91,27 +91,21 @@ export const setupRouterGuard = (router: Router) => {
         next()
       } else {
         if (!hasRouteFlag) {
-          try {
-            await userStore.getInfo()
-            if (userStore.userInfo.pwdExpired && to.path !== '/pwdExpired') {
-              Message.warning('密码已过期，请修改密码')
-              next('/pwdExpired')
-            }
-            const accessRoutes = await routeStore.generateRoutes()
-            accessRoutes.forEach((route) => {
-              if (!isHttp(route.path)) {
-                router.addRoute(route) // 动态添加可访问路由表
-              }
-            })
-            hasRouteFlag = true
-            // 确保添加路由已完成
-            // 设置 replace: true, 因此导航将不会留下历史记录
-            next({ ...to, replace: true })
-          } catch (error: any) {
-            // 过程中发生任何错误，都直接重置 Token，并重定向到登录页面
-            await userStore.logoutCallBack()
-            next(`/login?redirect=${to.path}`)
+          await userStore.getInfo()
+          if (userStore.userInfo.pwdExpired && to.path !== '/pwdExpired') {
+            Message.warning('密码已过期，请修改密码')
+            next('/pwdExpired')
           }
+          const accessRoutes = await routeStore.generateRoutes()
+          accessRoutes.forEach((route) => {
+            if (!isHttp(route.path)) {
+              router.addRoute(route) // 动态添加可访问路由表
+            }
+          })
+          hasRouteFlag = true
+          // 确保添加路由已完成
+          // 设置 replace: true, 因此导航将不会留下历史记录
+          next({ ...to, replace: true })
         } else {
           next()
         }
