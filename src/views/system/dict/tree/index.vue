@@ -191,6 +191,9 @@ onMounted(() => {
   .arco-typography {
     color: rgb(var(--primary-6));
   }
+  .action {
+    opacity: 1;
+  }
 }
 
 .container {
