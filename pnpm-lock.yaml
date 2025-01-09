@@ -134,6 +134,9 @@ importers:
       vue-router:
         specifier: ^4.3.3
         version: 4.3.3(vue@3.5.12(typescript@5.0.4))
+      vue3-tree-org:
+        specifier: ^4.2.2
+        version: 4.2.2(vue@3.5.12(typescript@5.0.4))
       xe-utils:
         specifier: ^3.5.7
         version: 3.5.26
@@ -1838,6 +1841,9 @@ packages:
 
   core-js-compat@3.37.1:
     resolution: {integrity: sha512-9TNiImhKvQqSUkOvk/mMRZzOANTiEVC7WaBNhHcKM7x+/5E1l5NvsysR19zuDQScE8k+kfQXWRN3AtS/eOSHpg==}
+
+  core-js@3.40.0:
+    resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
 
   cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
@@ -4625,6 +4631,11 @@ packages:
     peerDependencies:
       typescript: '*'
 
+  vue3-tree-org@4.2.2:
+    resolution: {integrity: sha512-AG2SykyD6dw0jIyqBm8iuF9j9GWli6KrwudxR1RjULCCBTDFsoNm7MmP/weKT7wowN/sPk+e2RsnvEJMw2OJMw==}
+    peerDependencies:
+      vue: ^3.0.0
+
   vue@3.5.12:
     resolution: {integrity: sha512-CLVZtXtn2ItBIi/zHZ0Sg1Xkb7+PU32bJJ8Bmy7ts3jxXTcbfsEfBivFYYWz1Hur+lalqGAh65Coin0r+HRUfg==}
     peerDependencies:
@@ -6586,6 +6597,8 @@ snapshots:
   core-js-compat@3.37.1:
     dependencies:
       browserslist: 4.23.0
+
+  core-js@3.40.0: {}
 
   cors@2.8.5:
     dependencies:
@@ -9617,6 +9630,11 @@ snapshots:
       '@vue/language-core': 2.0.19(typescript@5.0.4)
       semver: 7.6.2
       typescript: 5.0.4
+
+  vue3-tree-org@4.2.2(vue@3.5.12(typescript@5.0.4)):
+    dependencies:
+      core-js: 3.40.0
+      vue: 3.5.12(typescript@5.0.4)
 
   vue@3.5.12(typescript@5.0.4):
     dependencies:
