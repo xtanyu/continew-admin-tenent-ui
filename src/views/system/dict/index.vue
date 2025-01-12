@@ -1,10 +1,10 @@
 <template>
-  <div class="table-page">
-    <a-row justify="space-between" align="center" class="header page_header">
+  <div class="gi_page">
+    <!-- <a-row justify="space-between" align="center" class="header page_header">
       <a-space wrap>
         <div class="title">字典管理</div>
       </a-space>
-    </a-row>
+    </a-row> -->
     <SplitPanel>
       <template #left>
         <DictTree @node-click="handleSelectDict" />

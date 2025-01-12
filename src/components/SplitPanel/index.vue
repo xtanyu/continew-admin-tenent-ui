@@ -1,47 +1,35 @@
 <template>
   <div
-    ref="rootRef"
-    class="ca-split-panel"
-    :class="{
-      'is-vertical': vertical,
-      'is-reverse': reverse,
-      'is-resizing': resizing,
-      'is-collapse': isCollapse,
-      'is-responsive': isResponsive,
-      'is-mobile': isMobile,
-    }"
-    :style="customStyle"
+   ref="rootRef" 
+   class="ca-split-panel"
+   :class="{
+    'is-vertical': vertical,
+    'is-resizing': resizing,
+    'is-collapse': isCollapse,
+    'is-responsive': isResponsive,
+    'is-mobile': isMobile,
+  }" 
+  :style="customStyle"
   >
-    <div ref="sideRef" class="ca-split-panel__side" :style="sideStyle">
-      <div class="ca-split-panel__content">
-        <slot name="left"></slot>
-      </div>
-    </div>
+    <div class="container" style="display: flex;height: 100%;" :style="sideStyle">
+      <div ref="sideRef" class="ca-split-panel__side" :class="{ clead_padding: isCollapse }">
+        <div class="ca-split-panel__content">
+          <slot name="left"></slot>
+        </div>
 
-    <!-- 竖线和按钮 -->
-    <div class="divider">
-      <div
-        v-if="allowCollapse"
-        class="ca-split-panel__collapse-trigger"
-        :class="{
+      </div>
+      <!-- 竖线和按钮 -->
+      <div class="divider-container">
+        <div class="divider" v-show="!isCollapse"></div>
+        <div v-if="allowCollapse" class="ca-split-panel__collapse-trigger" :class="{
           'is-collapse': isCollapse,
           'is-mobile': isMobile,
-        }"
-        :style="!isMobile ? collapseTriggerStyle : undefined"
-        @click="toggleCollapse"
-      >
-        <a-button size="mini">
-          <template #icon>
-            <div v-if="reverse">
-              <IconRight v-if="!isCollapse" />
-              <IconLeft v-else />
-            </div>
-            <div v-else>
-              <IconLeft v-if="!isCollapse" />
-              <IconRight v-else />
-            </div>
-          </template>
-        </a-button>
+        }" :style="!isMobile ? collapseTriggerStyle : undefined" @click="toggleCollapse">
+          <div class="ca-split-panel__collapse-trigger-icon" style="">
+            <icon-right size="18" v-if="isCollapse" />
+            <icon-left v-else size="18" />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -204,6 +192,10 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.clead_padding {
+  padding: 0 !important;
+}
+
 .ca-split-panel {
   display: flex;
   width: 100%;
@@ -211,15 +203,17 @@ onUnmounted(() => {
   position: relative;
   background: var(--color-bg-2);
 
-  .divider {
-    width: 2px;
-    background-color: var(--color-border);
-    margin-right: 10px;
-    margin-left: 10px;
+  .divider-container {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .divider {
+      width: 2px;
+      height: 100%;
+      background-color: var(--color-border);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   // 布局变体
@@ -227,54 +221,16 @@ onUnmounted(() => {
     flex-direction: column;
   }
 
-  &.is-reverse {
-    flex-direction: row-reverse;
-
-    .ca-split-panel__side {
-      border-right: none;
-      border-left: 1px solid var(--color-border);
-    }
-
-    &__main-content {
-/*      margin-left: 10px;*/
-
-      :deep(.arco-table-border .arco-table-container) {
-        border-right: none;
-        border-left: 1px solid var(--color-border);
-      }
-    }
-
-    &.is-mobile {
-      .ca-split-panel__side {
-        left: auto;
-        right: 0;
-      }
-
-      .ca-split-panel__collapse-trigger {
-        left: 10px;
-        right: auto;
-
-        &.is-collapse {
-          left: auto;
-          right: 10px;
-        }
-      }
-
-      &.is-collapse .ca-split-panel__side {
-        transform: translateX(100%);
-      }
-    }
-  }
-
   // 基础组件
   &__side {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-shrink: 0;
-    background: var(--color-bg-2);
+    flex: 1;
+    background: var(--color-bg-1);
     overflow: hidden;
-
     transition: transform 0.3s ease, width 0.3s ease;
+    padding: $padding 10px;
   }
 
   &__content,
@@ -283,7 +239,7 @@ onUnmounted(() => {
     overflow: hidden;
 
     :deep(.arco-table-border .arco-table-container) {
-    /*  border-left: none;*/
+      /*  border-left: none;*/
       border: none;
     }
   }
@@ -296,47 +252,43 @@ onUnmounted(() => {
     flex-direction: column;
     overflow: hidden;
     background: var(--color-bg-1);
+    padding: $padding;
+  }
+
+  .ca-split-panel__collapse-trigger-icon {
+    // padding: 2px;
+    border-radius: 50%;
+    // position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 0px 1px var(--color-border);
+    // left: 0;
+    // transform: translate(-50%, -50%);
+    background-color: var(--color-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      box-shadow: 0px 0px 0px 1px var(--color-border-2);
+      background-color: var(--color-border-2);
+    }
   }
 
   // 折叠触发器
   &__collapse-trigger {
     align-items: center;
     cursor: pointer;
-    width: 32px;
-    height: 60px;
-    background-color: var(--color-bg-2);
-    border: 1px solid var(--color-border);
+    width: 28px;
+    height: 28px;
+    border-radius: 15px;
     justify-content: center;
-
-    // 遮罩效果，让分隔线看起来被按钮"切断"
-    &::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: -2px;
-      bottom: -2px;
-      transform: translateX(-50%);
-      width: 4px;
-      background-color: var(--color-bg-2);
-      z-index: -1;
-    }
-
-    :deep(.arco-btn) {
-      padding: 0;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      width: 100%;
-      height: 100%;
-
-      &:hover,
-      &:focus,
-      &:active {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-      }
-    }
+    position: absolute;
+    top: 50%;
+    left: 50% !important;
+    transform: translateX(-50%);
+    z-index: 1;
   }
 
   // 折叠状态
@@ -345,20 +297,19 @@ onUnmounted(() => {
       width: 0;
     }
 
-/*    .ca-split-panel__main {
-      padding-left: 0;
-    }*/
+    .ca-split-panel__collapse-trigger {
+      transform: translateX(0%);
+    }
   }
 
   // 移动端样式
   &.is-mobile {
     .ca-split-panel__side {
-      position: fixed;
-      left: 0;
-      top: 0;
       height: 100%;
+      width: 100%;
       background: var(--color-bg-2);
-      z-index: 1000;
+      z-index: 2;
+      padding: 0;
     }
 
     .divider {
@@ -368,13 +319,8 @@ onUnmounted(() => {
     }
 
     .ca-split-panel__collapse-trigger {
-      position: fixed;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
       z-index: 12;
-      width: 32px;
-      height: 40px;
+      transform: translateX(-100%);
 
       &::before {
         display: none;
@@ -386,8 +332,8 @@ onUnmounted(() => {
       }
     }
 
-    &.is-collapse .ca-split-panel__side {
-      transform: translateX(-100%);
+    &.is-collapse .ca-split-panel__collapse-trigger {
+      transform: translateX(0%);
     }
   }
 

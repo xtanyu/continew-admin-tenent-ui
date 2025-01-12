@@ -2,7 +2,7 @@
   <div class="table-page">
     <GiTable
       ref="tableRef"
-      title="菜单管理"
+      title=""
       row-key="id"
       :data="dataList"
       :columns="columns"

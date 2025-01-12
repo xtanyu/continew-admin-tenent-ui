@@ -1,7 +1,7 @@
 <template>
   <div class="table-page">
     <GiTable
-      title="存储管理"
+      title=""
       row-key="id"
       :data="dataList"
       :columns="columns"

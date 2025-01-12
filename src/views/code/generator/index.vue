@@ -2,7 +2,7 @@
   <div class="table-page">
     <GiTable
       v-model:selectedKeys="selectedKeys"
-      title="代码生成"
+      title=""
       row-key="tableName"
       :data="dataList"
       :columns="columns"

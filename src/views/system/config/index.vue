@@ -1,10 +1,10 @@
 <template>
   <div class="table-page">
-    <a-row justify="space-between" align="center" class="header page_header">
+    <!-- <a-row justify="space-between" align="center" class="header page_header">
       <a-space wrap>
         <div class="title">系统配置</div>
       </a-space>
-    </a-row>
+    </a-row> -->
     <a-tabs v-model:active-key="activeKey" type="card-gutter" size="large" @change="change">
       <a-tab-pane key="1">
         <template #title><icon-settings /> 基础配置</template>

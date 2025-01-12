@@ -2,7 +2,7 @@
   <div class="table-page">
     <GiTable
       row-key="id"
-      title="通知公告"
+      title=""
       :data="dataList"
       :columns="columns"
       :loading="loading"

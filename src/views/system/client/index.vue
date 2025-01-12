@@ -1,7 +1,7 @@
 <template>
   <div class="table-page">
     <GiTable
-      title="客户端管理"
+      title=""
       row-key="id"
       :data="dataList"
       :columns="columns"

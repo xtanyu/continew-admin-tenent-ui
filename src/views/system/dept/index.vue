@@ -9,7 +9,7 @@
     <GiTable
       v-show="viewType === 'table'"
       ref="tableRef"
-      title="部门管理"
+      title=""
       row-key="id"
       :data="dataList"
       :columns="columns"
