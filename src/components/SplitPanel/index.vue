@@ -1,7 +1,7 @@
 <template>
   <div
    ref="rootRef" 
-   class="ca-split-panel"
+   class="ca-split-panel" 
    :class="{
     'is-vertical': vertical,
     'is-resizing': resizing,
@@ -11,7 +11,7 @@
   }" 
   :style="customStyle"
   >
-    <div class="container" style="display: flex;height: 100%;" :style="sideStyle">
+    <div class="container" :style="sideStyle">
       <div ref="sideRef" class="ca-split-panel__side" :class="{ clead_padding: isCollapse }">
         <div class="ca-split-panel__content">
           <slot name="left"></slot>
@@ -26,8 +26,8 @@
           'is-mobile': isMobile,
         }" :style="!isMobile ? collapseTriggerStyle : undefined" @click="toggleCollapse">
           <div class="ca-split-panel__collapse-trigger-icon" style="">
-            <icon-right size="18" v-if="isCollapse" />
-            <icon-left v-else size="18" />
+            <icon-right size="20" v-if="isCollapse" />
+            <icon-left v-else size="20" />
           </div>
         </div>
       </div>
@@ -114,16 +114,16 @@ const sideStyle = computed((): CSSProperties => ({
   [props.vertical ? 'height' : 'width']: isCollapse.value
     ? '0'
     : (isMobile.value ? '100%' : (resizedSize.value || normalizedSize.value)),
-  transition: 'all 0.3s ease',
+  transition: 'all 0.5s ease',
   position: isMobile.value ? 'absolute' : 'relative',
-  zIndex: isMobile.value ? 10 : 1,
+  zIndex: isMobile.value ? 10 : 3,
 }))
 
 /**
  * 计算主内容区域样式
  */
 const mainStyle = computed(() => ({
-  transition: 'padding-left 0.3s ease',
+  transition: 'padding-left 0.5s ease',
   flex: 1,
 }))
 
@@ -197,18 +197,23 @@ onUnmounted(() => {
 }
 
 .ca-split-panel {
+  overflow: hidden;
   display: flex;
   width: 100%;
   height: 100%;
   position: relative;
   background: var(--color-bg-2);
-
+  .container{
+    display: flex;
+    height: 100%;
+  }
   .divider-container {
     position: relative;
+
     .divider {
       width: 2px;
       height: 100%;
-      background-color: var(--color-border);
+      background-color: var(--color-border-1);
       position: relative;
       display: flex;
       align-items: center;
@@ -229,8 +234,8 @@ onUnmounted(() => {
     flex: 1;
     background: var(--color-bg-1);
     overflow: hidden;
-    transition: transform 0.3s ease, width 0.3s ease;
-    padding: $padding 10px;
+    transition: transform 0.5s ease, width 0.5s ease;
+    padding: $padding;
   }
 
   &__content,
@@ -243,9 +248,6 @@ onUnmounted(() => {
       border: none;
     }
   }
-  .ca-split-panel__main {
-    padding-left: 10px;
-  }
   &__main {
     flex: 1;
     display: flex;
@@ -253,6 +255,7 @@ onUnmounted(() => {
     overflow: hidden;
     background: var(--color-bg-1);
     padding: $padding;
+    z-index: 1;
   }
 
   .ca-split-panel__collapse-trigger-icon {
@@ -262,10 +265,10 @@ onUnmounted(() => {
     z-index: 2;
     width: 100%;
     height: 100%;
-    box-shadow: 0px 0px 0px 1px var(--color-border);
+    box-shadow: 0px 0px 0px 1px var(--color-border-1);
     // left: 0;
     // transform: translate(-50%, -50%);
-    background-color: var(--color-border);
+    background-color: var(--color-bg-1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -288,7 +291,7 @@ onUnmounted(() => {
     top: 50%;
     left: 50% !important;
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 3;
   }
 
   // 折叠状态
@@ -307,7 +310,7 @@ onUnmounted(() => {
     .ca-split-panel__side {
       height: 100%;
       width: 100%;
-      background: var(--color-bg-2);
+      background: var(--color-bg-1);
       z-index: 2;
       padding: 0;
     }
