@@ -1,5 +1,5 @@
 <template>
-  <div class="table-page">
+  <div class="gi_table_page">
     <GiTable
       v-model:selectedKeys="selectedKeys"
       title=""
@@ -153,11 +153,10 @@ const onDownload = async (tableNames: Array<string>) => {
 // 生成
 const onGenerate = async (tableNames: Array<string>) => {
   const res = await generateCode(tableNames)
-  if(res.code === 0){
+  if (res.code === 0) {
     Message.success('代码生成成功')
   }
 }
-
 </script>
 
 <style scoped lang="scss"></style>

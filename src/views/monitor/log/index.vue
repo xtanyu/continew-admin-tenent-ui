@@ -1,5 +1,5 @@
 <template>
-  <div class="table-page">
+  <div class="gi_table_page">
     <!-- <a-row justify="space-between" align="center" class="header">
       <a-space wrap>
         <div class="title">系统日志</div>

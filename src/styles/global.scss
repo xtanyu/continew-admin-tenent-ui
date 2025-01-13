@@ -192,13 +192,12 @@
 }
 
 // 表格页面
-.table-page {
-  height: 100%;
+.gi_table_page {
+  flex: 1;
   overflow: hidden;
   margin: $margin;
   background: var(--color-bg-1);
   padding: $padding;
-  padding-bottom: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

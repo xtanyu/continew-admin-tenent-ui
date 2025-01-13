@@ -1,5 +1,5 @@
 <template>
-  <div class="table-page">
+  <div class="gi_table_page">
     <!-- <a-row justify="space-between" align="center" class="header page_header">
       <a-space wrap>
         <div class="title">系统配置</div>
@@ -60,7 +60,7 @@ const change = (key: string | number) => {
 </script>
 
 <style scoped lang="scss">
-.table-page {
+.gi_table_page {
   overflow-y: auto;
 }
 :deep(.arco-tabs .arco-tabs-nav-type-card-gutter .arco-tabs-tab-active) {
