@@ -11,7 +11,7 @@
       </template>
       <template #main>
         <a-row align="stretch" :gutter="14" class="h-full page_content">
-          <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" :xxl="24" class="h-full ov-hidden">
+          <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" :xxl="24" class="h-full overflow-hidden">
             <GiTable
               row-key="id"
               :data="dataList"

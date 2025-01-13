@@ -1,5 +1,22 @@
 /* 全局样式 */
 @import './var.scss';
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
 // 通用外边距
 .gi_margin {
   margin: $margin;
@@ -223,10 +240,12 @@
   }
 }
 
-.gi_table_box {
-  max-height: 100%;
+// 表格类名 高度自适应
+.gi_table {
+  flex: 1;
   overflow: hidden;
 }
+
 .detail{
   height: 100%;
   display: flex;
