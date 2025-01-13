@@ -33,10 +33,10 @@
             </a-doption>
           </template>
         </a-dropdown>
-        <a-popover 
+        <a-popover
           v-if="showSettingColumnBtn" trigger="click" position="br"
           :content-style="{ minWidth: '120px', padding: '6px 8px 10px' }"
-          >
+        >
           <a-tooltip content="列设置">
             <a-button>
               <template #icon>
@@ -77,15 +77,15 @@
     </a-row>
     <div class="gi-table__body" :class="`gi-table__body-pagination-${attrs['page-position']}`">
       <div class="gi-table__container">
-        <a-table 
-        ref="tableRef" 
-        :stripe="stripe" 
-        :size="size" 
-        column-resizable 
-        :bordered="{ cell: isBordered }"
-        v-bind="{ ...attrs, columns: _columns }" 
-        :scrollbar="true" 
-        :data="data"
+        <a-table
+          ref="tableRef"
+          :stripe="stripe"
+          :size="size"
+          column-resizable
+          :bordered="{ cell: isBordered }"
+          v-bind="{ ...attrs, columns: _columns }"
+          :scrollbar="true"
+          :data="data"
         >
           <template v-for="key in Object.keys(slots)" :key="key" #[key]="scoped">
             <slot :key="key" :name="key" v-bind="scoped"></slot>

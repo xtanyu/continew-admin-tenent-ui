@@ -3,7 +3,7 @@
     <a-grid class="w-full" :col-gap="8" v-bind="options.grid" :collapsed="collapsed">
       <template v-for="(item, index) in columns" :key="item.field">
         <a-grid-item
-          v-if="item.show !== undefined ? isShow(item) : !isHide(item.hide)"
+          v-if="item.show !== undefined ? isShow(item) : !isHide(item)"
           v-show="colVShow(index)"
           v-bind="item.gridItemProps || props.options.gridItem"
           :span="item.span || options.gridItem?.span"
