@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { type FormInstance, Message } from '@arco-design/web-vue'
-import { AuthTypeEnum, type BehaviorCaptchaReq } from '@/apis'
+import type { BehaviorCaptchaReq } from '@/apis'
 // import { type BehaviorCaptchaReq, getEmailCaptcha } from '@/apis'
 import { useTabsStore, useUserStore } from '@/stores'
 import * as Regexp from '@/utils/regexp'
@@ -69,7 +69,7 @@ const handleLogin = async () => {
     const isInvalid = await formRef.value?.validate()
     if (isInvalid) return
     loading.value = true
-    await userStore.emailLogin({ ...form, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeEnum.EMAIL })
+    await userStore.emailLogin(form)
     tabsStore.reset()
     const { redirect, ...othersQuery } = router.currentRoute.value.query
     await router.push({
